@@ -3,6 +3,7 @@
 #include "TankPlayerController.h"
 #include "BattleTank.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/PlayerController.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -46,6 +47,20 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & HitLocation) const 
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 
 	// "De-porject" the screen position of the crosshair to a world direction
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection)) {
+		UE_LOG(LogTemp, Warning, TEXT("World Direction: %s"), *LookDirection.ToString())
+	}
+
 	// Line-trace along that look direction, and see what we hit (up to a max range)
 	return true;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDireciton) const{
+	FVector CameraWorldLocation; // Discarded
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, 
+		ScreenLocation.Y, 
+		CameraWorldLocation, 
+		LookDireciton
+		);
 }
