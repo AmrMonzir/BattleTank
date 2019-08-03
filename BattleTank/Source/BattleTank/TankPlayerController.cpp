@@ -8,12 +8,12 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("Player Controller BeginPlay"));
-	if (GetControllerTank() != nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("Got a possessed tank %s"), *GetControllerTank()->GetName());
+	if (GetControlledTank() != nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("Got a possessed tank %s"), *GetControlledTank()->GetName());
 	}
 }
 
-ATank* ATankPlayerController::GetControllerTank() const 
+ATank* ATankPlayerController::GetControlledTank() const 
 {
 	return Cast<ATank>(GetPawn());
 }
